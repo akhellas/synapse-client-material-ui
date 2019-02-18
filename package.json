@@ -1,0 +1,33 @@
+{
+  "name": "synapse-client-material-ui",
+  "version": "0.1.0",
+  "description": "Synapse Client - Material UI",
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akhellas/synapse-client-material-ui.git"
+  },
+  "author": "ak.hellas@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akhellas/synapse-client-material-ui/issues"
+  },
+  "homepage": "https://github.com/akhellas/synapse-client-material-ui#readme",
+  "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@storybook/addon-actions": "^4.1.12",
+    "@storybook/addon-console": "^1.1.0",
+    "@storybook/addons": "^4.1.12",
+    "@storybook/react": "^4.1.12",
+    "babel-loader": "^8.0.5"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/styles": "^3.0.0-alpha.10",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "typeface-roboto": "0.0.54"
+  }
+}

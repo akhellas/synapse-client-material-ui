@@ -1,0 +1,12 @@
+{
+  "TABLE_TOOLBAR": {
+    "SELECTED": "${selectedCount} επιλεγμένα"
+  },
+  "TABLE_BODY": {
+    "NO_DATA": "Δεν βρέθηκαν αποτελέσματα"
+  },
+  "TABLE_FOOTER": {
+    "ROWS_PER_PAGE": "Εγγραφές ανά σελίδα:",
+    "DISPLAYED_ROWS": "${from}-${to} από ${count}"
+  }
+}
