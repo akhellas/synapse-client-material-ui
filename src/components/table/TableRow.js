@@ -10,7 +10,7 @@ const TableRow = ({ item, fields, selected, selection, onSelect, onClick }) => {
   return (
     <MuiTableRow hover>
       {selection && (
-        <MuiTableCell padding="checkbox">
+        <MuiTableCell padding="none">
           <MuiCheckbox checked={selected} onChange={evt => onSelect(item)} />
         </MuiTableCell>
       )}

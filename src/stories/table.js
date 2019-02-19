@@ -1,14 +1,17 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import Table from '../components/Table'
+import withTheme from '../theme'
+import _Table from '../components/Table'
+
+const Table = props => withTheme(props)(_Table)
 
 const stories = storiesOf('Table', module)
 
 stories.add('empty', () => <Table />)
 
 const simpleConfig = {
-  fields: [{ name: 'lastName', type: 'text' }],
+  fields: [{ name: 'lastName', type: 'text', caption: 'Last Name' }],
   data: [
     { _id: 1, lastName: 'last name 1' },
     { _id: 2, lastName: 'last name 2' }
