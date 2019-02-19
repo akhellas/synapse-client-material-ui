@@ -40,7 +40,7 @@ const TableHeader = ({
               <MuiTableSortLabel
                 active={sortBy === field.name}
                 direction={sortDirection || 'asc'}
-                onClick={evt => onSortChange(sortBy, sortDirection, field.name)}
+                onClick={() => onSortChange(field.name)}
               >
                 {field.caption}
               </MuiTableSortLabel>

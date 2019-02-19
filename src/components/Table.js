@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import MuiTable from '@material-ui/core/Table'
 import MuiTableBody from '@material-ui/core/TableBody'
@@ -46,29 +46,17 @@ const defaultActions = {
 const Table = ({
   fields = [],
   data = [],
-  total = data.length,
-  page = 1,
-  pageSize = 10,
+  selected = [],
+  total,
+  page,
+  pageSize,
+  sortBy,
+  sortDirection,
   options = defaultOptions,
   actions = defaultActions,
   strings = defaultStrings
 }) => {
   const classes = useStyles()
-  const [selected, setSelected] = useState([])
-  const [sortBy, setSortBy] = useState('')
-  const [sortDirection, setSortDirection] = useState('asc')
-
-  const handleSortChange = (prevSortBy, sortDirection, newSortBy) => {
-    const direction =
-      prevSortBy === newSortBy && sortDirection === 'asc' ? 'desc' : 'asc'
-
-    setSortBy(newSortBy)
-    setSortDirection(direction)
-    if (actions.onSortChange) {
-      actions.onSortChange(prevSortBy, direction, newSortBy)
-    }
-  }
-
   return (
     <div>
       <MuiTable>
@@ -80,7 +68,7 @@ const Table = ({
           sortDirection={sortDirection}
           selected={selected}
           onSelectAll={actions.onSelectAll}
-          onSortChange={handleSortChange}
+          onSortChange={actions.onSortChange}
         />
         <MuiTableBody>
           {data.length > 0 ? (
