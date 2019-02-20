@@ -76,7 +76,6 @@ const Table = ({
   const _actions = Object.assign({}, defaultActions, actions)
   const _options = Object.assign({}, defaultOptions, options)
 
-  console.log('onRender', page, pageSize)
   return (
     <div>
       <MuiTable>

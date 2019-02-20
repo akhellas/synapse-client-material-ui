@@ -33,7 +33,6 @@ const SimpleTableContainer = () => {
     { name: 'email', type: 'text', caption: 'Email' }
   ])
   const [data, setData] = useState(people)
-  const [selected, setSelected] = useState([])
   const [sortBy, setSortBy] = useState('')
   const [sortDirection, setSortDirection] = useState('asc')
   const [page, setPage] = useState(1)
@@ -54,6 +53,12 @@ const SimpleTableContainer = () => {
         )
       )
     },
+    onPageSizeChange: _pageSize => {
+      setPageSize(_pageSize)
+      setPageData(
+        data.slice((page - 1) * _pageSize, (page - 1) * _pageSize + _pageSize)
+      )
+    },
     onSortChange: field => {
       const direction =
         sortBy === field && sortDirection === 'asc' ? 'desc' : 'asc'
@@ -62,8 +67,6 @@ const SimpleTableContainer = () => {
       console.log('onSortChange', field, direction)
     }
   }
-  console.log('parent onRender', page, pageSize)
-  console.log(data.indexOf(pageData[0]))
 
   return (
     <Table
