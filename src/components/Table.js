@@ -33,12 +33,26 @@ const defaultOptions = {
 }
 
 const defaultActions = {
-  onSelect: item => console.log('onSelect', item),
+  onSelect: (selected, item, setSelected) => {
+    const idx = selected.indexOf(item)
+    let newSelected = [...selected]
+    if (idx !== -1) {
+      newSelected.splice(idx, 1)
+    } else {
+      newSelected = [...selected, item]
+    }
+    setSelected(newSelected)
+  },
+  onSelectAll: (data, selected, setSelected) => {
+    const newSelected = selected.length > 0 ? [] : [...data]
+    setSelected(newSelected)
+  },
+
   onClick: item => console.log('onRowClick', item),
   onPageChange: page => console.log('onPageChange', page),
   onPageSizeChange: pageSize => console.log('onPageSizeChange', pageSize),
   onAdd: () => console.log('onAdd'),
-  onSelectAll: () => console.log('onSelectAll'),
+
   onSortChange: (sortBy, sortDirection) =>
     console.log('onSortChange', sortBy, sortDirection)
 }
@@ -52,23 +66,29 @@ const Table = ({
   pageSize,
   sortBy,
   sortDirection,
-  options = defaultOptions,
-  actions = defaultActions,
+  options,
+  actions,
   strings = defaultStrings
 }) => {
   const classes = useStyles()
+  const [_selected, setSelected] = useState(selected)
+
+  const _actions = Object.assign({}, defaultActions, actions)
+  const _options = Object.assign({}, defaultOptions, options)
+
+  console.log('onRender', page, pageSize)
   return (
     <div>
       <MuiTable>
         <TableHeader
           fields={fields}
-          options={options}
-          total={total}
+          options={_options}
+          total={data.length}
+          selected={_selected.length}
           sortBy={sortBy}
           sortDirection={sortDirection}
-          selected={selected}
-          onSelectAll={actions.onSelectAll}
-          onSortChange={actions.onSortChange}
+          onSelectAll={() => _actions.onSelectAll(data, _selected, setSelected)}
+          onSortChange={_actions.onSortChange}
         />
         <MuiTableBody>
           {data.length > 0 ? (
@@ -77,30 +97,31 @@ const Table = ({
                 key={item._id || item.id}
                 item={item}
                 fields={fields}
-                selection={options.selection}
-                onSelect={actions.onSelect}
-                onClick={actions.onClick}
+                selected={_selected.indexOf(item) !== -1}
+                selection={_options.selection}
+                onSelect={() => _actions.onSelect(_selected, item, setSelected)}
+                onClick={_actions.onClick}
               />
             ))
           ) : (
             <NoData
               classes={classes}
-              colSpan={fields.length + (options.selection === false ? 0 : 1)}
+              colSpan={fields.length + (_options.selection === false ? 0 : 1)}
               text={strings.TABLE_BODY.NO_DATA}
             />
           )}
         </MuiTableBody>
         <TableFooter
           total={total}
-          paging={options.paging}
+          paging={_options.paging}
           page={page}
           pageSize={pageSize}
-          onPageChange={actions.onPageChange}
-          onPageSizeChange={actions.onPageSizeChange}
+          onPageChange={_actions.onPageChange}
+          onPageSizeChange={_actions.onPageSizeChange}
           strings={strings}
         />
       </MuiTable>
-      {actions.onAdd && <TableFabs classes={classes} onAdd={actions.onAdd} />}
+      {_actions.onAdd && <TableFabs classes={classes} onAdd={_actions.onAdd} />}
     </div>
   )
 }

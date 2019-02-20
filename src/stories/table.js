@@ -39,14 +39,20 @@ const SimpleTableContainer = () => {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [pageData, setPageData] = useState(
-    data.slice(page * pageSize, page * pageSize + pageSize)
+    data.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
   )
 
   const actions = {
-    onPageChange: page => {
-      console.log('onPageChange', page)
-      setPage(page)
-      setPageData(data.slice(page * pageSize, page * pageSize + pageSize))
+    onPageChange: _page => {
+      const newPage = _page + 1
+      console.log('onPageChange', _page)
+      setPage(newPage)
+      setPageData(
+        data.slice(
+          (newPage - 1) * pageSize,
+          (newPage - 1) * pageSize + pageSize
+        )
+      )
     },
     onSortChange: field => {
       const direction =
@@ -54,18 +60,10 @@ const SimpleTableContainer = () => {
       setSortBy(field)
       setSortDirection(direction)
       console.log('onSortChange', field, direction)
-    },
-    onSelect: item => {
-      const exists = selected.find(x => x._id === item._id)
-      let newSelected = [...selected]
-      if (exists) {
-        newSelected.splice(selected.indexOf(exists), 1)
-      } else {
-        newSelected = [...selected, item]
-      }
-      setSelected(newSelected)
     }
   }
+  console.log('parent onRender', page, pageSize)
+  console.log(data.indexOf(pageData[0]))
 
   return (
     <Table
