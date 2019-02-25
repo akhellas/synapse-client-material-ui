@@ -7,6 +7,7 @@ import { install } from '@material-ui/styles'
 install()
 
 function loadStories() {
+  require('../src/stories/form.js')
   require('../src/stories/table.js')
 }
 
