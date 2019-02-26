@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import MuiPaper from '@material-ui/core/Paper'
 
@@ -43,29 +43,40 @@ const Form = ({
   const classes = useStyles()
   const [state, setState] = useState(data)
 
+  const handleSubmit = evt => {
+    console.log(refs.map(r => r.ref))
+    evt.preventDefault()
+  }
+
+  const refs = []
+  const displayable = fields.filter(field => shouldDisplay(field))
+  // displayable.forEach(field => {})
+
+  displayable.forEach(field => {
+    const ref = useRef(null)
+
+    const FormField = (
+      <Field
+        key={field.name}
+        ref={ref}
+        classes={classes}
+        name={field.name}
+        type={field.type}
+        label={field.caption}
+        defaultValue={data[field.name]}
+        options={field.options}
+      />
+    )
+    refs.push(FormField)
+  })
+
   return (
     <div className={classes.root}>
       <MuiPaper className={classes.paper}>
-        {fields
-          .filter(field => shouldDisplay(field))
-          .map(field => (
-            <Field
-              key={field.name}
-              classes={classes}
-              name={field.name}
-              type={field.type}
-              label={field.caption}
-              value={data[field.name]}
-              options={field.options}
-              onBlur={() => onBlur(field)}
-              onChange={(evt, value) =>
-                onChange(
-                  field,
-                  value || (evt && evt.target ? evt.target.value : null)
-                )
-              }
-            />
-          ))}
+        <form onSubmit={handleSubmit}>
+          {refs}
+          <input type="submit" value="Submit" />
+        </form>
       </MuiPaper>
     </div>
   )

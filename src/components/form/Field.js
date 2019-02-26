@@ -26,34 +26,11 @@ const FieldSelector = props => {
   }
 }
 
-const Field = ({
-  name,
-  label,
-  type,
-  value,
-  errors,
-  onBlur,
-  onChange,
-  options = {}
-}) => {
+const Field = props => {
   const classes = useStyles()
   return (
-    <MuiFormControl className={classes.field} fullWidth>
-      {type !== 'autocomplete' && (
-        <MuiInputLabel htmlFor={name}>{label}</MuiInputLabel>
-      )}
-      <FieldSelector
-        id={name}
-        className={classes.field}
-        label={label}
-        name={name}
-        type={type}
-        value={value}
-        errors={errors}
-        options={options}
-        onBlur={onBlur}
-        onChange={onChange}
-      />
+    <MuiFormControl className={props.classes.field} fullWidth>
+      <FieldSelector {...props} />
     </MuiFormControl>
   )
 }

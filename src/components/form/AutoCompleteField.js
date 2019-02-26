@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import AsyncSelect from 'react-select/lib/Async'
 import classNames from 'classnames'
 import { makeStyles, useTheme } from '@material-ui/styles'
@@ -206,6 +206,7 @@ const components = {
 
 const AutoCompleteField = props => {
   useLogger('AutoCompleteField', props)
+  const ref = useRef(null)
   const classes = useStyles()
   const theme = useTheme()
   const selectStyles = {
@@ -222,7 +223,7 @@ const AutoCompleteField = props => {
 
   const handleChange = (actionValue, actionOptions) => {
     let value
-    console.log({ ...actionOptions })
+    //console.log({ ...actionOptions })
     switch (actionOptions.action) {
       case 'select-option':
         value = actionValue
@@ -247,13 +248,18 @@ const AutoCompleteField = props => {
         )
     }
 
-    props.onChange(props.field, value)
+    setTimeout(() => {
+      const { state } = ref.current.select
+      console.log(state)
+    }, 1)
+    //props.onChange(props.field, value)
   }
-
+  console.log(ref)
   if (options.isMulti) {
     return (
       <AsyncSelect
         {...options}
+        ref={ref}
         classes={classes}
         styles={selectStyles}
         components={components}
